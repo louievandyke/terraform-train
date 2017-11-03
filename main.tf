@@ -9,7 +9,7 @@ variable "server_port" {
 	default = 8080
 }
 resource "aws_launch_configuration" "example" {
-  image_id		  = "ami-09d2fb69"
+  image_id        = "ami-09d2fb69"
   instance_type	  = "t2.micro"
   security_groups = ["${aws_security_group.instance.id}"]
 
@@ -39,8 +39,8 @@ resource "aws_autoscaling_group" "example" {
 	max_size = 10
 
 	tag {
-		key					= "Name"
-		value				= "terraform-asg-example"
+		key			= "Name"
+		value			= "terraform-asg-example"
 		propagate_at_launch	= true
 	}
 }
@@ -51,8 +51,8 @@ resource "aws_elb" "example" {
 	security_groups 	= ["${aws_security_group.elb.id}"]
 
 	listener {
-		lb_port				= 80
-		lb_protocol			= "http"
+		lb_port			= 80
+		lb_protocol		= "http"
 		instance_port		= "${var.server_port}"
 		instance_protocol	= "http"
 	}
@@ -60,9 +60,9 @@ resource "aws_elb" "example" {
 	health_check {
 		healthy_threshold	= 2
 		unhealthy_threshold	= 2
-		timeout				= 3
-		interval			= 30
-		target				= "HTTP:${var.server_port}/"
+		timeout			= 3
+		interval		= 30
+		target			= "HTTP:${var.server_port}/"
 	}
 }
 
@@ -77,9 +77,9 @@ resource "aws_security_group" "elb" {
 	}
 
 	egress {
-		from_port 		= 0
-		to_port			= 0
-		protocol 		= "-1"
+		from_port 	= 0
+		to_port		= 0
+		protocol 	= "-1"
 		cidr_blocks 	= ["0.0.0.0/0"]
 	}
 }
